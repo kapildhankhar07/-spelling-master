@@ -1,0 +1,113 @@
+<!DOCTYPE html>
+<html lang="en" data-theme="light">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=no">
+    <title>SpellMaster | Learn English Spelling</title>
+    <link rel="stylesheet" href="style.css">
+    <link href="https://fonts.googleapis.com/css2?family=Poppins:wght@400;500;600;700&display=swap" rel="stylesheet">
+</head>
+<body>
+    <div class="app-container">
+        
+        <header class="glass-panel top-header">
+            <div class="streak" title="Current Streak">🔥 <span id="streak-count">0</span> Days</div>
+            <div class="xp" title="Experience Points">⭐ <span id="xp-count">0</span> XP</div>
+        </header>
+
+        <section id="tab-home" class="tab-content active glass-panel">
+            <h2>Your Progress</h2>
+            <div class="stats-grid">
+                <div class="stat-card">
+                    <span id="stat-practiced" class="stat-num">0</span>
+                    <span class="stat-label">Practiced</span>
+                </div>
+                <div class="stat-card">
+                    <span id="stat-mastered" class="stat-num">0</span>
+                    <span class="stat-label">Mastered</span>
+                </div>
+                <div class="stat-card">
+                    <span id="stat-weak" class="stat-num">0</span>
+                    <span class="stat-label">Weak Words</span>
+                </div>
+                <div class="stat-card highlight-card">
+                    <span id="stat-accuracy" class="stat-num">0%</span>
+                    <span class="stat-label">Accuracy</span>
+                </div>
+            </div>
+            <div class="motivation-box">
+                <p id="daily-quote">"Consistency beats talent!"</p>
+            </div>
+        </section>
+
+        <section id="tab-play" class="tab-content glass-panel">
+            
+            <div class="category-wrapper">
+                <select id="category-select" class="glass-select">
+                    <option value="All">🌍 All Categories</option>
+                    </select>
+            </div>
+
+            <div class="mode-selector">
+                <button class="mode-btn active" data-mode="classic">Classic</button>
+                <button class="mode-btn" data-mode="blanks">Blanks</button>
+            </div>
+
+            <div class="target-selector">
+                <button class="target-btn active" data-target="mix">🔀 Mix</button>
+                <button class="target-btn" data-target="new">🆕 New</button>
+                <button class="target-btn" data-target="weak">💔 Weak</button>
+                <button class="target-btn" data-target="revise">🏆 Revise</button>
+            </div>
+
+            <div class="word-card">
+                <div class="badges">
+                    <span id="word-category" class="badge category-badge">Daily Use</span>
+                    <span id="word-difficulty" class="badge difficulty-badge">Easy</span>
+                    <span id="word-mastery" class="badge mastery-badge">Lvl 0/7</span>
+                </div>
+                
+                <h2 id="pronunciation-hint" class="hint-text">लोड हो रहा है...</h2>
+                <p id="meaning-hint" class="meaning-text">Loading...</p>
+                <h3 id="blanks-hint" class="blanks-text hidden"></h3>
+                
+                <div class="input-group">
+                    <input type="text" id="spelling-input" placeholder="Type spelling here..." autocomplete="off">
+                    <button id="check-btn" class="btn primary-btn">Check</button>
+                </div>
+
+                <div id="feedback-area" class="feedback hidden">
+                    <h3 id="feedback-title"></h3>
+                    <p id="diff-output" class="diff-text"></p>
+                    <p id="correct-spelling" class="correct-text"></p>
+                    <p id="motivation-msg" class="motivation-text"></p>
+                    <button id="next-btn" class="btn secondary-btn hidden">Next Word ➔</button>
+                </div>
+            </div>
+        </section>
+
+        <section id="tab-settings" class="tab-content glass-panel">
+            <h2>Settings</h2>
+            <div class="settings-list">
+                <div class="setting-item">
+                    <span>Dark Mode</span>
+                    <button id="theme-toggle" class="icon-btn">🌙</button>
+                </div>
+                <div class="setting-item">
+                    <span>Reset Progress</span>
+                    <button id="reset-btn" class="btn danger-btn">Reset All</button>
+                </div>
+            </div>
+        </section>
+
+        <nav class="bottom-nav glass-panel">
+            <button class="nav-item active" data-target="tab-home">🏠<br><span>Home</span></button>
+            <button class="nav-item play-btn" data-target="tab-play">🎮<br><span>Play</span></button>
+            <button class="nav-item" data-target="tab-settings">⚙️<br><span>Settings</span></button>
+        </nav>
+
+    </div>
+
+    <script src="app.js"></script>
+</body>
+</html>
