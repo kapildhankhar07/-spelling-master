@@ -1,11 +1,11 @@
 <!DOCTYPE html>
-<html lang="en" data-theme="light">
+<html lang="en" data-theme="dark">
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=no">
-    <title>SpellMaster | Learn English Spelling</title>
+    <title>SpellMaster | Premium Spelling App</title>
     <link rel="stylesheet" href="style.css">
-    <link href="https://fonts.googleapis.com/css2?family=Poppins:wght@400;500;600;700&display=swap" rel="stylesheet">
+    <link href="https://fonts.googleapis.com/css2?family=Poppins:wght@400;500;600;700;800&display=swap" rel="stylesheet">
 </head>
 <body>
     <div class="app-container">
@@ -15,7 +15,7 @@
             <div class="xp" title="Experience Points">⭐ <span id="xp-count">0</span> XP</div>
         </header>
 
-        <section id="tab-home" class="tab-content active glass-panel">
+        <section id="tab-home" class="tab-content glass-panel">
             <h2>Your Progress</h2>
             <div class="stats-grid">
                 <div class="stat-card">
@@ -40,24 +40,26 @@
             </div>
         </section>
 
-        <section id="tab-play" class="tab-content glass-panel">
+        <section id="tab-play" class="tab-content active glass-panel play-layout">
             
-            <div class="category-wrapper">
-                <select id="category-select" class="glass-select">
-                    <option value="All">🌍 All Categories</option>
+            <button id="toggle-options-btn" class="toggle-options-btn">⚙️ Practice Settings 🔽</button>
+
+            <div id="play-options" class="top-controls collapsed">
+                <div class="category-wrapper">
+                    <select id="category-select" class="glass-select">
+                        <option value="All">🌍 All Categories</option>
                     </select>
-            </div>
-
-            <div class="mode-selector">
-                <button class="mode-btn active" data-mode="classic">Classic</button>
-                <button class="mode-btn" data-mode="blanks">Blanks</button>
-            </div>
-
-            <div class="target-selector">
-                <button class="target-btn active" data-target="mix">🔀 Mix</button>
-                <button class="target-btn" data-target="new">🆕 New</button>
-                <button class="target-btn" data-target="weak">💔 Weak</button>
-                <button class="target-btn" data-target="revise">🏆 Revise</button>
+                </div>
+                <div class="mode-selector">
+                    <button class="mode-btn active" data-mode="classic">Classic</button>
+                    <button class="mode-btn" data-mode="blanks">Blanks</button>
+                </div>
+                <div class="target-selector">
+                    <button class="target-btn active" data-target="mix">🔀 Mix</button>
+                    <button class="target-btn" data-target="new">🆕 New</button>
+                    <button class="target-btn" data-target="weak">💔 Weak</button>
+                    <button class="target-btn" data-target="revise">🏆 Revise</button>
+                </div>
             </div>
 
             <div class="word-card">
@@ -71,19 +73,44 @@
                 <p id="meaning-hint" class="meaning-text">Loading...</p>
                 <h3 id="blanks-hint" class="blanks-text hidden"></h3>
                 
-                <div class="input-group">
-                    <input type="text" id="spelling-input" placeholder="Type spelling here..." autocomplete="off">
-                    <button id="check-btn" class="btn primary-btn">Check</button>
-                </div>
-
-                <div id="feedback-area" class="feedback hidden">
-                    <h3 id="feedback-title"></h3>
-                    <p id="diff-output" class="diff-text"></p>
-                    <p id="correct-spelling" class="correct-text"></p>
-                    <p id="motivation-msg" class="motivation-text"></p>
-                    <button id="next-btn" class="btn secondary-btn hidden">Next Word ➔</button>
+                <div id="input-area" class="input-group">
+                    <input type="text" id="spelling-input" placeholder="Type here..." readonly>
                 </div>
             </div>
+
+            <div id="custom-keyboard" class="keyboard-container">
+                <div class="key-row">
+                    <button class="key" data-key="Q">Q</button><button class="key" data-key="W">W</button><button class="key" data-key="E">E</button>
+                    <button class="key" data-key="R">R</button><button class="key" data-key="T">T</button><button class="key" data-key="Y">Y</button>
+                    <button class="key" data-key="U">U</button><button class="key" data-key="I">I</button><button class="key" data-key="O">O</button><button class="key" data-key="P">P</button>
+                </div>
+                <div class="key-row">
+                    <div class="key-spacer half"></div>
+                    <button class="key" data-key="A">A</button><button class="key" data-key="S">S</button><button class="key" data-key="D">D</button>
+                    <button class="key" data-key="F">F</button><button class="key" data-key="G">G</button><button class="key" data-key="H">H</button>
+                    <button class="key" data-key="J">J</button><button class="key" data-key="K">K</button><button class="key" data-key="L">L</button>
+                    <div class="key-spacer half"></div>
+                </div>
+                <div class="key-row">
+                    <div class="key-spacer half"></div>
+                    <button class="key" data-key="Z">Z</button><button class="key" data-key="X">X</button><button class="key" data-key="C">C</button>
+                    <button class="key" data-key="V">V</button><button class="key" data-key="B">B</button><button class="key" data-key="N">N</button><button class="key" data-key="M">M</button>
+                    <button class="key action-key del-key" data-key="⌫">⌫</button>
+                </div>
+                <div class="key-row enter-row">
+                    <button id="key-enter" class="key action-key enter-key" data-key="ENTER">SUBMIT</button>
+                </div>
+            </div>
+
+            <div id="feedback-area" class="result-card hidden">
+                <h3 id="feedback-title" class="result-title"></h3>
+                <div class="diff-box">
+                    <p id="diff-output" class="diff-text"></p>
+                </div>
+                <p id="correct-spelling" class="correct-text"></p>
+                <button id="next-btn" class="massive-next-btn">NEXT WORD ➔</button>
+            </div>
+
         </section>
 
         <section id="tab-settings" class="tab-content glass-panel">
@@ -91,7 +118,7 @@
             <div class="settings-list">
                 <div class="setting-item">
                     <span>Dark Mode</span>
-                    <button id="theme-toggle" class="icon-btn">🌙</button>
+                    <button id="theme-toggle" class="icon-btn">☀️</button>
                 </div>
                 <div class="setting-item">
                     <span>Reset Progress</span>
@@ -101,8 +128,8 @@
         </section>
 
         <nav class="bottom-nav glass-panel">
-            <button class="nav-item active" data-target="tab-home">🏠<br><span>Home</span></button>
-            <button class="nav-item play-btn" data-target="tab-play">🎮<br><span>Play</span></button>
+            <button class="nav-item" data-target="tab-home">🏠<br><span>Home</span></button>
+            <button class="nav-item active play-btn" data-target="tab-play">🎮<br><span>Play</span></button>
             <button class="nav-item" data-target="tab-settings">⚙️<br><span>Settings</span></button>
         </nav>
 
