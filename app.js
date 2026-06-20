@@ -8,7 +8,7 @@ let currentWord = null;
 let lastWordId = null;
 
 let appState = 'TYPING'; 
-let inputCooldown = false; // 🛡️ COOLDOWN LOCK TO PREVENT DOUBLE FIRES
+let inputCooldown = false; 
 let currentCombo = 0;
 let gameMode = 'classic';
 let practiceTarget = 'mix';
@@ -24,7 +24,9 @@ const els = {
     playOptions: document.getElementById('play-options'),
     categorySelect: document.getElementById('category-select'),
     categoryBadge: document.getElementById('word-category'), difficulty: document.getElementById('word-difficulty'),
-    masteryBadge: document.getElementById('word-mastery'), hint: document.getElementById('pronunciation-hint'),
+    masteryBadge: document.getElementById('word-mastery'), 
+    mistakesBadge: document.getElementById('word-mistakes'), // NEW BADGE
+    hint: document.getElementById('pronunciation-hint'),
     meaning: document.getElementById('meaning-hint'), blanksHint: document.getElementById('blanks-hint'),
     
     inputArea: document.getElementById('input-area'), 
@@ -102,7 +104,7 @@ document.addEventListener('keydown', (e) => {
 });
 
 function handleKeyInput(keyVal) {
-    if (inputCooldown) return; // 🛡️ Freeze logic fix
+    if (inputCooldown) return; 
 
     if (appState === 'RESULT') {
         if (keyVal === 'ENTER') {
@@ -176,11 +178,10 @@ function nextWord() {
     appState = 'TYPING'; 
     els.input.value = ''; 
     
-    // Show Typing UI, Hide Result Card
+    // UI Resets
     els.inputArea.classList.remove('hidden');
     els.keyboard.classList.remove('hidden'); 
     els.feedbackArea.classList.add('hidden');
-    
     els.input.classList.remove('shake');
 
     let basePool = currentCategory === 'All' ? wordsData : wordsData.filter(w => w.category === currentCategory);
@@ -206,17 +207,27 @@ function nextWord() {
         els.inputArea.classList.add('hidden');
         els.keyboard.classList.add('hidden');
         els.blanksHint.classList.add('hidden');
+        els.mistakesBadge.classList.add('hidden');
         return;
     }
 
     currentWord = pool[Math.floor(Math.random() * pool.length)];
     lastWordId = currentWord.id; 
     
-    const wordStat = userData.wordStats[currentWord.id] || { checkpoints: 0 };
+    const wordStat = userData.wordStats[currentWord.id] || { checkpoints: 0, mistakes: 0 };
     
     els.categoryBadge.textContent = currentWord.category;
     els.difficulty.textContent = currentWord.difficulty;
     els.masteryBadge.textContent = `Lvl ${wordStat.checkpoints}/7`;
+    
+    // NEW: DISPLAY MISTAKE COUNT
+    if (wordStat.mistakes > 0) {
+        els.mistakesBadge.textContent = `Mistakes: ${wordStat.mistakes}`;
+        els.mistakesBadge.classList.remove('hidden');
+    } else {
+        els.mistakesBadge.classList.add('hidden');
+    }
+
     els.hint.textContent = currentWord.pronunciation_hindi;
     els.meaning.textContent = currentWord.meaning_hindi;
     
@@ -228,7 +239,6 @@ function nextWord() {
     }
 }
 
-// 🎯 PERFECT DIFF LOGIC FIX 🎯
 function generateDiff(input, correct) {
     let html = "";
     const inArr = input.toLowerCase().split('');
@@ -260,7 +270,6 @@ function processAnswer() {
     userData.totalAttempts++;
     const isCorrect = userAnswer.toLowerCase() === currentWord.word.toLowerCase();
     
-    // Hide Keyboard & Show Result Card
     els.keyboard.classList.add('hidden'); 
     els.inputArea.classList.add('hidden'); 
     els.feedbackArea.classList.remove('hidden');

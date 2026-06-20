@@ -11,7 +11,6 @@
     --card-bg: rgba(255, 255, 255, 0.6);
 }
 
-/* PREMIUM MIDNIGHT BLUE DARK MODE */
 [data-theme="dark"] {
     --bg-gradient: linear-gradient(135deg, #0f172a 0%, #1e293b 100%);
     --glass-bg: rgba(15, 23, 42, 0.7);
@@ -39,7 +38,7 @@ body {
 .app-container {
     width: 100%; max-width: 500px; height: 100dvh;
     display: flex; flex-direction: column;
-    padding: 15px; padding-bottom: 95px; 
+    padding: 15px; padding-bottom: 0px; /* Removed global padding */
     position: relative; overflow-x: hidden;
 }
 
@@ -52,12 +51,18 @@ body {
 
 .top-header { display: flex; justify-content: space-between; padding: 15px 20px; margin-bottom: 15px; font-weight: bold; flex-shrink: 0; }
 
-.tab-content { display: none !important; padding: 20px; overflow-y: auto; flex-grow: 1; padding-bottom: 20px; }
+.tab-content { display: none !important; padding: 20px; overflow-y: auto; flex-grow: 1; padding-bottom: 100px; }
 .tab-content.active { display: flex !important; flex-direction: column; animation: fadeIn 0.3s ease; }
 @keyframes fadeIn { from { opacity: 0; transform: translateY(10px); } to { opacity: 1; transform: translateY(0); } }
 
-/* PLAY LAYOUT FIX */
-#tab-play { padding-bottom: 10px; overflow: hidden; /* Prevent internal scroll */ }
+/* --- PLAY LAYOUT SCROLL FIX --- */
+#tab-play { 
+    /* Ensures user can scroll past the bottom nav */
+    padding-bottom: 140px !important; 
+    overflow-y: auto !important; 
+    overflow-x: hidden;
+    justify-content: flex-start;
+}
 
 .toggle-options-btn {
     width: 100%; background: var(--card-bg); border: 1px solid var(--glass-border); color: var(--text-main);
@@ -69,12 +74,13 @@ body {
 .top-controls.collapsed { max-height: 0; opacity: 0; pointer-events: none; margin-bottom: 0 !important; }
 
 /* Word Card */
-.word-card { flex-grow: 1; display: flex; flex-direction: column; justify-content: center; text-align: center; }
-.badges { display: flex; justify-content: center; gap: 8px; margin-bottom: 10px; }
+.word-card { flex-grow: 1; display: flex; flex-direction: column; justify-content: center; text-align: center; min-height: 200px; }
+.badges { display: flex; justify-content: center; gap: 8px; margin-bottom: 10px; flex-wrap: wrap; }
 .badge { padding: 4px 10px; border-radius: 20px; font-size: 0.75rem; font-weight: bold; }
 .category-badge { background: var(--primary-color); color: #fff; }
 .difficulty-badge { background: #fdcb6e; color: #2d3436; }
 .mastery-badge { background: #a29bfe; color: #fff; }
+.danger-badge { background: var(--error-color); color: #fff; }
 
 .hint-text { font-size: 2.2rem; margin-bottom: 5px; font-weight: 800; }
 .meaning-text { font-size: 1.1rem; color: var(--text-muted); margin-bottom: 15px; }
@@ -92,7 +98,7 @@ input[type="text"][readonly] {
 /* --- KEYBOARD --- */
 .keyboard-container { 
     width: 100%; display: flex; flex-direction: column; gap: 8px; 
-    margin-top: auto; flex-shrink: 0; padding-top: 5px;
+    margin-top: 15px; flex-shrink: 0; padding-top: 5px;
 }
 .key-row { display: flex; justify-content: center; gap: 4px; width: 100%; }
 .key-spacer.half { flex: 0.5; }
@@ -118,20 +124,13 @@ input[type="text"][readonly] {
     background: var(--primary-color) !important; color: white !important; border-color: var(--primary-hover); 
 }
 
-/* --- NEW PROFESSIONAL RESULT CARD (Replaces Keyboard) --- */
+/* --- RESULT CARD --- */
 .result-card {
-    background: var(--card-bg);
-    border: 1px solid var(--glass-border);
-    border-radius: 20px;
-    padding: 20px;
-    margin-top: auto;
-    flex-shrink: 0;
-    text-align: center;
-    box-shadow: 0 10px 25px rgba(0,0,0,0.1);
+    background: var(--card-bg); border: 1px solid var(--glass-border); border-radius: 20px; padding: 20px;
+    margin-top: 15px; flex-shrink: 0; text-align: center; box-shadow: 0 10px 25px rgba(0,0,0,0.1);
     animation: slideUp 0.3s ease-out;
 }
 [data-theme="dark"] .result-card { box-shadow: 0 10px 25px rgba(0,0,0,0.5); border-top: 1px solid rgba(255,255,255,0.2); }
-
 @keyframes slideUp { from { transform: translateY(30px); opacity: 0; } to { transform: translateY(0); opacity: 1; } }
 
 .result-title { font-size: 1.8rem; font-weight: 800; margin-bottom: 10px; }
@@ -145,15 +144,12 @@ input[type="text"][readonly] {
 .char-missing { color: #f59e0b; border-bottom: 4px solid #f59e0b; padding-bottom: 2px;}
 
 .massive-next-btn {
-    width: 100%; height: 55px; border-radius: 15px; border: none;
-    background: var(--success-color); color: white;
+    width: 100%; height: 55px; border-radius: 15px; border: none; background: var(--success-color); color: white;
     font-size: 1.3rem; font-weight: 800; letter-spacing: 1px; cursor: pointer;
-    box-shadow: 0 5px 0 #047857, 0 8px 15px rgba(0,0,0,0.2);
-    transition: 0.1s; text-transform: uppercase;
+    box-shadow: 0 5px 0 #047857, 0 8px 15px rgba(0,0,0,0.2); transition: 0.1s; text-transform: uppercase;
 }
 [data-theme="dark"] .massive-next-btn { box-shadow: 0 5px 0 #064e3b, 0 8px 15px rgba(0,0,0,0.5); }
 .massive-next-btn:active { transform: translateY(5px); box-shadow: 0 0 0 transparent; }
-
 .hidden { display: none !important; }
 
 /* Basic Utility & Nav */
@@ -173,8 +169,7 @@ input[type="text"][readonly] {
 
 /* FIXED NAV */
 .bottom-nav { 
-    position: fixed; bottom: 0; left: 0; width: 100%; 
-    display: flex; justify-content: space-around; 
+    position: fixed; bottom: 0; left: 0; width: 100%; display: flex; justify-content: space-around; 
     padding: 15px 10px; padding-bottom: calc(15px + env(safe-area-inset-bottom)); 
     border-radius: 20px 20px 0 0; border-top: 1px solid var(--glass-border);
     z-index: 1000; background: var(--glass-bg); backdrop-filter: blur(16px);
